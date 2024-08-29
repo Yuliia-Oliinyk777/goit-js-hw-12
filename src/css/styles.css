@@ -1,0 +1,129 @@
+@import url('./reset.css');
+@import url('izitoast/dist/css/iziToast.min.css');
+@import url('simplelightbox/dist/simple-lightbox.min.css');
+.gallery-section {
+  padding: 36px 156px;
+}
+.container {
+  max-width: 1128px;
+  margin: 0 auto;
+}
+.search-form {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.search-input {
+  border-radius: 4px;
+  border: 1px solid #808080;
+  width: 272px;
+  height: 38px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+  outline: transparent;
+  padding-left: 16px;
+}
+.search-input::placeholder {
+  color: #808080;
+}
+.search-input:hover {
+  border: 1px solid #000;
+}
+.search-input:focus,
+.search-input:active {
+  border: 1px solid #4e75ff;
+}
+.search-btn {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 91px;
+  height: 42px;
+  background-color: #4e75ff;
+  border-color: transparent;
+}
+.search-btn:hover,
+.search-btn:focus {
+  background-color: #6c8cff;
+}
+.loader {
+  transform: rotateZ(45deg);
+  perspective: 1000px;
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  color: #4e75ff;
+  position: relative;
+  margin: 0 auto; /* Центрирует лоудер */
+}
+
+.loader:before,
+.loader:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  transform: rotateX(70deg);
+  animation: 1s spin linear infinite;
+}
+
+.loader:after {
+  color: #1aff00;
+  transform: rotateY(70deg);
+  animation-delay: 0.4s;
+}
+
+@keyframes spin {
+  0%,
+  100% {
+    box-shadow: 0.2em 0px 0 0px currentcolor;
+  }
+  12% {
+    box-shadow: 0.2em 0.2em 0 0 currentcolor;
+  }
+  25% {
+    box-shadow: 0 0.2em 0 0px currentcolor;
+  }
+  37% {
+    box-shadow: -0.2em 0.2em 0 0 currentcolor;
+  }
+  50% {
+    box-shadow: -0.2em 0 0 0 currentcolor;
+  }
+  62% {
+    box-shadow: -0.2em -0.2em 0 0 currentcolor;
+  }
+  75% {
+    box-shadow: 0px -0.2em 0 0 currentcolor;
+  }
+  87% {
+    box-shadow: 0.2em -0.2em 0 0 currentcolor;
+  }
+}
+
+.gallery-list {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.gallery-item {
+  width: calc((100% - 48px) / 3);
+}
+.info {
+  display: flex;
+  gap: 24px;
+  padding: 4px 24px;
+  text-align: center;
+}
