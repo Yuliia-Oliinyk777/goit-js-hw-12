@@ -11,31 +11,38 @@ const searchForm = document.querySelector('.search-form');
 const galleryList = document.querySelector('.gallery-list');
 
 const loader = document.querySelector('.loader');
+
 const loadMoreBtn = document.querySelector('.load-btn');
 
 let currentPage = 1;
 let searchedWord = '';
 let totalPages = 0;
 let cardHeight = 0;
+const simpleLightbox = new SimpleLightbox('.gallery-item a', {
+    captions: true,
+    captionsData: 'alt',
+    captionDelay: 250,
+});
 const onSearchFormSubmit = async event => {
     try {
         event.preventDefault();
         searchedWord = searchForm.elements.user_query.value.trim();
-        currentPage = 1;
-        const response = await fetchImages(searchedWord, currentPage);
-        console.log(response);
+        
+    
          if (searchedWord === '') {
-    iziToast.show({
+        iziToast.show({
         message: 'Please enter a search term.',
         messageColor: '#ffffff',
         backgroundColor: '#ef4040',
                    position: 'topRight',
     });
-        galleryList.innerHTML = '';
-    return;
+             galleryList.innerHTML = '';
+             loadMoreBtn.classList.add('is-hidden');
+        return;
     }
-
-    searchForm.reset();
+        currentPage = 1;
+        const response = await fetchImages(searchedWord, currentPage);
+        searchForm.reset();
 
         galleryList.innerHTML = '';
         
@@ -47,26 +54,25 @@ const onSearchFormSubmit = async event => {
                    messageColor: '#ffffff',
                    backgroundColor: '#ef4040',
                    position: 'topRight',
-               });
+            });
+            loadMoreBtn.classList.add('is-hidden');
                return;
            }
            
-            const galleryCardsTenmplate = response.data.hits.map(imgInfo => createGalleryCardTemplate(imgInfo)).join('');
-           galleryList.innerHTML = galleryCardsTenmplate;
-           new SimpleLightbox('.gallery-item a', {
-  captions: true,
-  captionsData: 'alt',
-  captionDelay: 250,
-           })
-            .refresh();
+         const galleryCardsTenmplate = response.data.hits.map(imgInfo => createGalleryCardTemplate(imgInfo)).join('');
+         galleryList.innerHTML = galleryCardsTenmplate;
+        
+           simpleLightbox.refresh();
          
-const galleryCard = document.querySelector('.gallery-item');
-    cardHeight = galleryCard.getBoundingClientRect().height;
+         const galleryCard = document.querySelector('.gallery-item');
+         cardHeight = galleryCard.getBoundingClientRect().height;
        
-   totalPages = Math.ceil(response.data.totalHits / response.data.hits.length);
-        if (totalPages > 1) {
+         totalPages = Math.ceil(response.data.totalHits / response.data.hits.length);
+         if (totalPages > 1) {
             loadMoreBtn.classList.remove('is-hidden');
-         }
+         } else {
+            loadMoreBtn.classList.add('is-hidden'); 
+        }
          
     } catch (error) {
         iziToast.error({
@@ -87,12 +93,7 @@ const onLoadMoreBtnClick = async event => {
             
             const galleryCardsTenmplate = response.data.hits.map(imgInfo => createGalleryCardTemplate(imgInfo)).join('');
             galleryList.insertAdjacentHTML("beforeend", galleryCardsTenmplate);
-                   new SimpleLightbox('.gallery-item a', {
-  captions: true,
-  captionsData: 'alt',
-  captionDelay: 250,
-           })
-       .refresh();
+           simpleLightbox.refresh();
         scrollBy({
       top: cardHeight * 2,
       behavior: 'smooth',
