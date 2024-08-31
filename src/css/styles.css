@@ -121,11 +121,13 @@
 .gallery-item {
   width: calc((100% - 48px) / 3);
 }
-img {
+.gallery-item a {
   width: 100%;
   height: auto;
-  max-width: 360px;
-  max-height: 200px;
+}
+img {
+  width: 360px;
+  height: 200px;
 }
 
 .info {
