@@ -126,8 +126,17 @@
   height: auto;
 }
 img {
-  width: 360px;
-  height: 200px;
+  width: 100%;
+  height: auto;
+  max-width: 360px;
+  max-height: 200px;
+}
+
+.simple-lightbox img {
+  max-width: none;
+  max-height: none;
+  width: auto;
+  height: auto;
 }
 
 .info {
