@@ -62,7 +62,7 @@
   height: 72px;
   color: #4e75ff;
   position: relative;
-  margin: 0 auto; /* Центрирует лоудер */
+  margin: 0 auto;
 }
 
 .loader:before,
@@ -117,13 +117,45 @@
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
+  margin-bottom: 32px;
 }
 .gallery-item {
   width: calc((100% - 48px) / 3);
 }
+img {
+  width: 100%;
+  height: auto;
+  max-width: 360px;
+  max-height: 200px;
+}
+
 .info {
   display: flex;
   gap: 24px;
   padding: 4px 24px;
   text-align: center;
+}
+.load-btn {
+  display: block;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 125px;
+  height: 40px;
+  background-color: #4e75ff;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  border-color: transparent;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 48px;
+}
+.load-btn:hover,
+.load-btn:focus {
+  background-color: #6c8cff;
+}
+.is-hidden {
+  display: none;
 }
