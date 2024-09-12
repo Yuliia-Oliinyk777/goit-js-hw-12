@@ -174,30 +174,31 @@ document.addEventListener("DOMContentLoaded", function () {
   const pictureEl = document.querySelector('.about-picture');
   const sourceEls = document.querySelectorAll('source');
   const imgEl = document.querySelector('.about-photo');
-  
+  const srcsetVal = source.getAttribute('srcset');
+   const imgSrc = imgEl.getAttribute('src');
+  sourceEls.removeAttribute('srcset');
+  imgEl.removeAttribute('src');
   const observerAbout = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-    
         sourceEls.forEach((source) => {
-          const srcsetVal = source.getAttribute('data-srcset');
-          if (srcsetVal) {
-           
-            source.removeAttribute('data-srcset');
-             source.setAttribute('srcset', srcsetVal);
+                if (srcsetVal) {
+            source.setAttribute('srcset', srcsetVal);
           }
         });
-        const imgSrc = imgEl.getAttribute('data-src');
+       
         if (imgSrc) {
-          
-          imgEl.removeAttribute('data-src');
           imgEl.setAttribute('src', imgSrc);
+          
         }
 
-              observer.unobserve(imgEl);
+        observer.unobserve(pictureEl);
+        observer.unobserve(imgEl);
       }
     });
   });
 
-      observerAbout.observe(imgEl);
+  observerAbout.observe(pictureEl);
+    observerAbout.observe(imgEl);
 });
+
