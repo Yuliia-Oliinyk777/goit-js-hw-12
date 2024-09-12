@@ -168,37 +168,48 @@ const swiper = new Swiper('.swiper-container-about', {
   allowSlidePrev: false,
 });
 
-
-const sectionAbout = document.querySelector('.section-about');
 document.addEventListener("DOMContentLoaded", function () {
   const pictureEl = document.querySelector('.about-picture');
   const sourceEls = document.querySelectorAll('source');
   const imgEl = document.querySelector('.about-photo');
-  const srcsetVal = source.getAttribute('srcset');
-   const imgSrc = imgEl.getAttribute('src');
-  sourceEls.removeAttribute('srcset');
-  imgEl.removeAttribute('src');
+
+  // Створюємо масив для збереження оригінальних значень `srcset`
+  const sourceData = [];
+  sourceEls.forEach((source) => {
+    const srcsetVal = source.getAttribute('srcset');
+    if (srcsetVal) {
+      sourceData.push({
+        element: source,
+        srcset: srcsetVal
+      });
+      source.removeAttribute('srcset'); // Видаляємо, щоб уникнути передчасного завантаження
+    }
+  });
+
+  const imgSrc = imgEl.getAttribute('src');
+  imgEl.removeAttribute('src'); // Видаляємо src, щоб зображення не завантажилось відразу
+
   const observerAbout = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        sourceEls.forEach((source) => {
-                if (srcsetVal) {
-            source.setAttribute('srcset', srcsetVal);
-          }
+        // Відновлюємо `srcset` для кожного елемента `source`
+        sourceData.forEach((sourceObj) => {
+          sourceObj.element.setAttribute('srcset', sourceObj.srcset);
         });
-       
+
+        // Відновлюємо `src` для зображення
         if (imgSrc) {
           imgEl.setAttribute('src', imgSrc);
-          
         }
 
+        // Зупиняємо спостереження після завантаження
         observer.unobserve(pictureEl);
-        observer.unobserve(imgEl);
       }
     });
   });
 
+  // Спостерігаємо за елементом `picture`
   observerAbout.observe(pictureEl);
-    observerAbout.observe(imgEl);
 });
+
 
