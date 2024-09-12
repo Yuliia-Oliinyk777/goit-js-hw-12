@@ -124,3 +124,82 @@ const onLoadMoreBtnClick = async event => {
 searchForm.addEventListener('submit', onSearchFormSubmit);
 loadMoreBtn.addEventListener('click', onLoadMoreBtnClick)
 
+
+import Accordion from 'accordion-js';
+import 'accordion-js/dist/accordion.min.css';
+export const accordion = new Accordion('.about-me-list', {
+  duration: 300,
+  showMultiple: false,
+  openOnInit: [0],
+});
+
+import Swiper from 'swiper';
+import { Navigation, Keyboard } from 'swiper/modules';
+import 'swiper/css/bundle';
+import 'swiper/css';
+import 'swiper/css/navigation';
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+
+const swiper = new Swiper('.swiper-container-about', {
+  modules: [Navigation, Keyboard],
+  loop: true,
+  slidesPerView: 2,
+
+  breakpoints: {
+    768: {
+      slidesPerView: 3,
+    },
+    1440: {
+      slidesPerView: 6,
+    },
+  },
+
+  navigation: {
+    nextEl: '.swiper-button-next',
+  },
+
+  keyboard: {
+    enabled: true,
+    onlyInViewport: true,
+  },
+
+  touchEventsTarget: 'container',
+  allowSlidePrev: false,
+});
+
+
+const sectionAbout = document.querySelector('.section-about');
+document.addEventListener("DOMContentLoaded", function () {
+  const pictureEl = document.querySelector('.about-picture');
+  const sourceEls = document.querySelectorAll('source');
+  const imgEl = document.querySelector('.about-photo');
+  
+  const observerAbout = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+    
+        sourceEls.forEach((source) => {
+          const srcsetVal = source.getAttribute('data-srcset');
+          if (srcsetVal) {
+           
+            source.removeAttribute('data-srcset');
+             source.setAttribute('srcset', srcsetVal);
+          }
+        });
+        const imgSrc = imgEl.getAttribute('data-src');
+        if (imgSrc) {
+          
+          imgEl.removeAttribute('data-src');
+          imgEl.setAttribute('src', imgSrc);
+        }
+
+        observer.unobserve(pictureEl);
+        observer.unobserve(imgEl);
+      }
+    });
+  });
+
+  observerAbout.observe(pictureEl);
+    observerAbout.observe(imgEl);
+});
