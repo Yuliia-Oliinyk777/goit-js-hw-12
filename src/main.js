@@ -169,37 +169,35 @@ const swiper = new Swiper('.swiper-container-about', {
 });
 
 
-// const sectionAbout = document.querySelector('.section-about');
-// document.addEventListener("DOMContentLoaded", function () {
-//   const pictureEl = document.querySelector('.about-picture');
-//   const sourceEls = document.querySelectorAll('source');
-//   const imgEl = document.querySelector('.about-photo');
+const sectionAbout = document.querySelector('.section-about');
+document.addEventListener("DOMContentLoaded", function () {
+  const pictureEl = document.querySelector('.about-picture');
+  const sourceEls = document.querySelectorAll('source');
+  const imgEl = document.querySelector('.about-photo');
   
-//   const observerAbout = new IntersectionObserver((entries, observer) => {
-//     entries.forEach((entry) => {
-//       if (entry.isIntersecting) {
+  const observerAbout = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
     
-//         sourceEls.forEach((source) => {
-//           const srcsetVal = source.getAttribute('data-srcset');
-//           if (srcsetVal) {
+        sourceEls.forEach((source) => {
+          const srcsetVal = source.getAttribute('data-srcset');
+          if (srcsetVal) {
            
-//             source.removeAttribute('data-srcset');
-//              source.setAttribute('srcset', srcsetVal);
-//           }
-//         });
-//         const imgSrc = imgEl.getAttribute('data-src');
-//         if (imgSrc) {
+            source.removeAttribute('data-srcset');
+             source.setAttribute('srcset', srcsetVal);
+          }
+        });
+        const imgSrc = imgEl.getAttribute('data-src');
+        if (imgSrc) {
           
-//           imgEl.removeAttribute('data-src');
-//           imgEl.setAttribute('src', imgSrc);
-//         }
+          imgEl.removeAttribute('data-src');
+          imgEl.setAttribute('src', imgSrc);
+        }
 
-//         observer.unobserve(pictureEl);
-//         observer.unobserve(imgEl);
-//       }
-//     });
-//   });
+              observer.unobserve(imgEl);
+      }
+    });
+  });
 
-//   observerAbout.observe(pictureEl);
-//     observerAbout.observe(imgEl);
-// });
+      observerAbout.observe(imgEl);
+});
